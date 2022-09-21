@@ -24,12 +24,21 @@ wget -qO-  https://raw.githubusercontent.com/iKoolCore/PVE_Status_Tools/main/PVE
 ```
 systemctl restart pveproxy
 ```
-方法② ：
-执行命令重新安装 `proxmox-widget-toolkit` 和 `pve-manager` <br>
+~~方法② ：~~ `因部分网络环境无法联网安装，弃用此联网重装方式，采用下面离线正则修改方式` <br>
+~~执行命令重新安装 `proxmox-widget-toolkit` 和 `pve-manager` <br>~~
 ```
 apt reinstall proxmox-widget-toolkit && systemctl restart pveproxy.service   #还原订阅提示并重启服务
 apt reinstall pve-manager && systemctl restart pveproxy   #还原概要页面并重启服务
 ```
+方法②：
+运行以下四条命令（适用于已经改过概要信息，还原成默认的概要信息）：
+```
+sed -i '/PVE::pvecfg::version_text();/,/my $dinfo = df/!b;//!d;s/my $dinfo = df/\n    &/' /usr/share/perl5/PVE/API2/Nodes.pm
+sed -i '/pveversion/,/^\s\+],/!b;//!d;s/^\s\+],/      value: '"'"''"'"',\n    },\n&/' /usr/share/pve-manager/js/pvemanagerlib.js
+sed -i '/widget.pveNodeStatus/,/},/ { s/height: [0-9]\+/height: 300/; /textAlign/d}' /usr/share/pve-manager/js/pvemanagerlib.js
+systemctl restart pveproxy
+```
+
 
 #### 三、注意事项：
 > ① 目前脚本仅适配最新的PVE 7.2-3版本（20220920）更新版本，请备份文件自测；<br>
