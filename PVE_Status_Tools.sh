@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
 
-## Build 20220920-002
+## Build 20220921-001
 
 #"/usr/share/perl5/PVE/API2/Nodes.pm"
 #"/usr/share/pve-manager/js/pvemanagerlib.js"
 #"/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js"
 
 # 检查并安装工具包
-if [ -z $(which sensors) ]; then
-    echo -e "正在安装 lm-sensors ......"
-    apt-get install -y lm-sensors > /dev/null 2>&1
-    chmod +s /usr/sbin/smartctl
-fi
+if [[ -z $(which sensors) || -z $(which sensors) ]]; then
+    apt-get update > /dev/null 2>&1
+    if [ -z $(which sensors) ]; then
+        echo -e "正在安装 lm-sensors ......"
+        apt-get install -y lm-sensors > /dev/null 2>&1
+        chmod +s /usr/sbin/smartctl
+    fi
 
-if [ -z $(which iostat) ]; then
-    echo -e "正在安装 sysstat ......"
-    apt-get install -y sysstat > /dev/null 2>&1
+    if [ -z $(which iostat) ]; then
+        echo -e "正在安装 sysstat ......"
+        apt-get install -y sysstat > /dev/null 2>&1
+    fi
 fi
 
 # 识别 CPU 平台
@@ -841,8 +844,8 @@ INFO_API="$cpu_info_api$nvme_info_api$hdd_info_api"
 INFO_DISPLAY="$cpu_freq_display$cpu_temp_display$nvme_info_display$hdd_info_display"
 
 # 缓存代码
-echo -e "\n" > /tmp/0.txt
-echo -e "	    value: '',\n	}," > /tmp/1.txt
+# echo -e "\n" > /tmp/0.txt
+# echo -e "	    value: '',\n	}," > /tmp/1.txt
 echo -e "$INFO_API" > /tmp/2.txt
 echo -e "	    value: '',\n	}$INFO_DISPLAY" > /tmp/3.txt
 
@@ -872,7 +875,8 @@ fi
 # apt-get update > /dev/null 2>&1
 # apt-get reinstall pve-manager > /dev/null 2>&1
 # sed -i '/PVE::pvecfg::version_text();/,/my $dinfo = df/!b;//!d;s/my $dinfo = df/\n	&/' /usr/share/perl5/PVE/API2/Nodes.pm
-# sed -i '/pveversion/,/^\s\+],/!b;//!d;/^\s\+],/e cat /tmp/1.txt' /usr/share/pve-manager/js/pvemanagerlib.js
+# sed -i '/pveversion/,/^\s\+],/!b;//!d;s/^\s\+],/	    value: '"'"''"'"',\n	},\n&/' /usr/share/pve-manager/js/pvemanagerlib.js
+# sed -i '/widget.pveNodeStatus/,/},/ { s/height: [0-9]\+/height: 300/; /textAlign/d}' /usr/share/pve-manager/js/pvemanagerlib.js
 
 # 将 API 及 Web UI 文件修改至原文件
 sed -i '/PVE::pvecfg::version_text();/,/my $dinfo = df/!b;//!d;/my $dinfo = df/e cat /tmp/2.txt' /usr/share/perl5/PVE/API2/Nodes.pm
@@ -881,7 +885,7 @@ sed -i '/pveversion/,/^\s\+],/!b;//!d;/^\s\+],/e cat /tmp/3.txt' /usr/share/pve-
 #sed -i '/let win = Ext.create('"'"'Ext.window.Window'"'"', {/,/height/ s/height: [0-9]\+/height: '$height1'/' /usr/share/pve-manager/js/pvemanagerlib.js
 
 # 修改信息框 Web UI 高度
-sed -i '/widget.pveNodeStatus/,/},/ { s/height: [0-9]\+/height: '$height2'/; s/	    },/		textAlign: '"'"'right'"'"',\n&/}' /usr/share/pve-manager/js/pvemanagerlib.js
+sed -i '/widget.pveNodeStatus/,/},/ s/height: [0-9]\+/height: '$height2'/; /width: '"'"'100%'"'"'/{n;s/	    },/		textAlign: '"'"'right'"'"',\n&/}' /usr/share/pve-manager/js/pvemanagerlib.js
 
 # 完善汉化信息
 sed -i '/'"'"'netin'"'"', '"'"'netout'"'"'/{n;s/		    store: rrdstore/		    fieldTitles: [gettext('"'"'下行'"'"'), gettext('"'"'上行'"'"')],	\n&/g}' /usr/share/pve-manager/js/pvemanagerlib.js
