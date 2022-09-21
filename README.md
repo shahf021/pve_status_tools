@@ -1,6 +1,8 @@
 <center><h1> PVE_Status_Tools </center>
 
 <hr>
+![](./images/pve_status.png)
+
 
 #### 一、安装方法：
 
