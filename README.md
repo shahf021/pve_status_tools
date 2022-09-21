@@ -30,6 +30,7 @@ systemctl restart pveproxy
 ```
 ~~方法② ：~~ `因部分网络环境无法联网安装，弃用此联网重装方式，采用下面离线正则修改方式` <br>
 ~~执行命令重新安装 `proxmox-widget-toolkit` 和 `pve-manager` <br>~~
+
 ```
 apt reinstall proxmox-widget-toolkit && systemctl restart pveproxy.service   #还原订阅提示并重启服务
 apt reinstall pve-manager && systemctl restart pveproxy   #还原概要页面并重启服务
@@ -37,9 +38,12 @@ apt reinstall pve-manager && systemctl restart pveproxy   #还原概要页面并
 方法②：
 运行以下四条命令（适用于已经改过概要信息，还原成默认的概要信息）：
 ```
-sed -i '/PVE::pvecfg::version_text();/,/my $dinfo = df/!b;//!d;s/my $dinfo = df/\n    &/' /usr/share/perl5/PVE/API2/Nodes.pm
-sed -i '/pveversion/,/^\s\+],/!b;//!d;s/^\s\+],/      value: '"'"''"'"',\n    },\n&/' /usr/share/pve-manager/js/pvemanagerlib.js
+sed -i '/PVE::pvecfg::version_text();/,/my $dinfo = df/!b;//!d;s/my $dinfo = df/\n\t&/' /usr/share/perl5/PVE/API2/Nodes.pm
+
+sed -i '/pveversion/,/^\s\+],/!b;//!d;s/^\s\+],/\t    value: '"'"''"'"',\n\t},\n&/' /usr/share/pve-manager/js/pvemanagerlib.js
+
 sed -i '/widget.pveNodeStatus/,/},/ { s/height: [0-9]\+/height: 300/; /textAlign/d}' /usr/share/pve-manager/js/pvemanagerlib.js
+
 systemctl restart pveproxy
 ```
 
