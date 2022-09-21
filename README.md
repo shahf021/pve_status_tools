@@ -1,8 +1,10 @@
 <center><h1> PVE_Status_Tools </center>
 
 <hr>
-![](./images/pve_status.png)
 
+![](https://github.com/iKoolCore/PVE_Status_Tools/blob/main/images/pve_status.png?raw=true)
+
+<hr>
 
 #### 一、安装方法：
 
