@@ -86,13 +86,8 @@ modprobe it87 force_id=0x8686 ignore_resource_conflict=1
 update-initramfs -u -k all
 ```
 
-#### 五、更新日志：
-2022.9.20.001 更新日志：
 
-> 1、调整依赖工具包的安装时机，解决报错；<br>
-> 2、增加一些代码注释。
-
-#### 六、相关资源：
+#### 五、相关资源：
 
  [PVE暗黑主题 ｜ PVEDiscordDark ](https://github.com/Weilbyte/PVEDiscordDark) thanks to [Weilbyte](https://github.com/Weilbyte)
  [![](https://ikoolcore.oss-cn-shenzhen.aliyuncs.com/Banner1.png)](https://item.taobao.com/item.htm?ft=t&id=682025492099)
