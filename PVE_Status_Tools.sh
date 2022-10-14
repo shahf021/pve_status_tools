@@ -901,6 +901,9 @@ sed -i '/'"'"'diskread'"'"', '"'"'diskwrite'"'"'/{n;s/		    store: rrdstore/		  
 # 去除订阅提示
 sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
+# 删除企业订阅源
+rm /etc/apt/sources.list.d/pve-enterprise.list
+
 echo -e "添加 PVE 硬件概要信息完成，正在重启 pveproxy 服务 ......"
 systemctl restart pveproxy
 
