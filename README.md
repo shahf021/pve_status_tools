@@ -15,7 +15,7 @@
 export LC_ALL=en_US.UTF-8
 apt update && apt -y install git && git clone https://github.com/iKoolCore/PVE_Status_Tools.git
 cd PVE_Status_Tools
-./PVE_Status_Tools.sh
+bash ./PVE_Status_Tools.sh
 ```
 
 **或**  *直接执行下面一行代码：*
