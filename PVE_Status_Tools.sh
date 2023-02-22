@@ -507,6 +507,7 @@ if [ $(ls /dev/nvme? 2> /dev/null | wc -l) -gt 0 ]; then
 	                    if (nvme.Useds.length > 0) {
 	                        output += '"'"' | '"'"';
 	                        for (const nvmeUsed of nvme.Useds) {
+				    output += `损耗: ${nvmeUsed}% `;
 	                            output += `寿命: ${100 - nvmeUsed}% `;
 	                            if (nvme.Reads.length > 0) {
 	                                output += '"'"'('"'"';
