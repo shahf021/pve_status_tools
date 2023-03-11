@@ -45,49 +45,7 @@ systemctl restart pveproxy
 ```
 
 
-#### 三、注意事项：
-> ① 目前脚本仅适配最新的PVE 7.2-3版本（20220920）更新版本，请备份文件自测；<br>
-> ② AMD平台目前仅兼容 Ryzen 7，不可显示核心温度；<br>
-
-<hr>
-
-**如果执行以上安装之后，PVE的信息显示完全且无问题，下面传感器驱动可不操作执行。<br>以下传感器驱动模块安装适用于部分微星主板和CW-N5105的V3版本**
-
-<hr>
-
-#### 四、传感器驱动（非必须）
-1. DKMS 动态内核驱动模块
-
-操作方法：
-
-① WinSCP等SFTP功能软件访问PVE，按照功能需求，复制文件到对应路径；<br>
-② SSH 访问 PVE，执行以下命令: 
-```
-apt-get update && apt-get install -y dkms pve-headers #安装 dkms 和 pve-headers
-```
-将 xxx-dkms_xxxx_all.deb 上传至 PVE /tmp 文件夹
-```
-dpkg -i /tmp/xxx-dkms_xxxx_all.deb #安装 deb 驱动包
-```
-
-2. 确保已安装lm-sensors
-```
-apt-get update && apt-get install -y lm-sensors
-```
-
-3. it87模块驱动的额外操作，加载模块到内核
-```
-modprobe it87 force_id=0x8686 ignore_resource_conflict=1
-```
-
-4. 更新 initramfs (初始化 RAM 系统)
-
-```
-update-initramfs -u -k all
-```
-
-
-#### 五、相关资源：
+#### 三、相关资源：
 
  [PVE暗黑主题 ｜ PVEDiscordDark ](https://github.com/Weilbyte/PVEDiscordDark) thanks to [Weilbyte](https://github.com/Weilbyte)
  [![](https://ikoolcore.oss-cn-shenzhen.aliyuncs.com/Banner1.png)](https://item.taobao.com/item.htm?ft=t&id=682025492099)

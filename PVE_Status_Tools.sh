@@ -507,8 +507,8 @@ if [ $(ls /dev/nvme? 2> /dev/null | wc -l) -gt 0 ]; then
 	                    if (nvme.Useds.length > 0) {
 	                        output += '"'"' | '"'"';
 	                        for (const nvmeUsed of nvme.Useds) {
-				    output += `损耗: ${nvmeUsed}% `;
-	                            output += `寿命: ${100 - nvmeUsed}% `;
+				    output += `损耗寿命: ${nvmeUsed}% `;
+	                            output += `剩余寿命: ${100 - nvmeUsed}% `;
 	                            if (nvme.Reads.length > 0) {
 	                                output += '"'"'('"'"';
 	                                for (const nvmeRead of nvme.Reads) {
@@ -904,6 +904,9 @@ sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/
 
 # 删除企业订阅源
 rm /etc/apt/sources.list.d/pve-enterprise.list
+
+# 增加PVE内核官方源
+echo "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc/apt/sources.list
 
 echo -e "添加 PVE 硬件概要信息完成，正在重启 pveproxy 服务 ......"
 systemctl restart pveproxy
