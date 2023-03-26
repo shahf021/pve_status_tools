@@ -8,19 +8,24 @@
 
 #### 一、安装方法：
 
+在终端中按行分别执行以下内容：
+
+强烈建议先删除企业源：rm /etc/apt/sources.list.d/pve-enterprise.list
+
 > 注意:需要使用`root`身份执行下面代码
 
 *在终端中按行分别执行以下代码：*
 ```
+rm /etc/apt/sources.list.d/pve-enterprise.list
 export LC_ALL=en_US.UTF-8
-apt update && apt -y install git && git clone https://github.com/iKoolCore/PVE_Status_Tools.git
+apt update && apt -y install git && git clone https://github.com/shahf021/pve_status_tools.git
 cd PVE_Status_Tools
 bash ./PVE_Status_Tools.sh
 ```
 
 **或**  *直接执行下面一行代码：*
 ```
-wget -qO-  https://raw.githubusercontent.com/iKoolCore/PVE_Status_Tools/main/PVE_Status_Tools.sh | bash
+wget -qO-  https://raw.githubusercontent.com/shahf021/pve_status_tools/main/PVE_Status_Tools.sh | bash
 ```
 #### 二、还原方法：
 方法① ：
