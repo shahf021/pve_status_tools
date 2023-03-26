@@ -19,7 +19,7 @@
 rm /etc/apt/sources.list.d/pve-enterprise.list
 export LC_ALL=en_US.UTF-8
 apt update && apt -y install git && git clone https://github.com/shahf021/pve_status_tools.git
-cd PVE_Status_Tools
+cd pve_status_tools
 bash ./PVE_Status_Tools.sh
 ```
 
