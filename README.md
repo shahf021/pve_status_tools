@@ -2,7 +2,7 @@
 
 <hr>
 
-![](https://github.com/iKoolCore/PVE_Status_Tools/blob/main/images/pve_status.png?raw=true)
+![](https://github.com/shahf021/pve_status_tools/blob/main/images/pve_status.png?raw=true)
 
 <hr>
 
